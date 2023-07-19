@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package acme;
+
+message BigInt {
+  bytes bytes = 1;
+}
+
+
+// ## Block Details ##
+message SolanaBlockHeader {
+  string hash = 1;
+  uint64 number = 2;
+  string parent_hash = 3;
+  uint64 parent_number = 4;
+  string timestamp = 5;
+  uint64 transaction_count = 6;
+  uint64 block_height = 7;
+  RewardsList rewards_list = 8;
+}
+
+message RewardsList {
+  repeated Reward rewards_list = 1;
+}
+
+
+message Reward {
+  string pubkey = 1;
+  uint64 lamports = 2;
+  uint64 post_balance = 3;
+  uint32 reward_type = 4;
+  string commission = 5;
+}
+
+
+
+message Transaction {
+  string block_hash = 1;
+  string timestamp = 2;
+  uint64 block_number = 3;
+  uint64 fee = 4;
+  string error = 5;
+  bool inner_instructions_none = 6;
+  bool log_messages_none = 7;
+  TokenBalanceList token_balance_list = 8;
+  repeated uint64 post_balances = 9;
+  // CustomList post_token_balances =9;
+  repeated uint64 pre_balances = 10;
+  repeated string log_messages = 11;
+  RewardsList rewards_list = 12;
+  // CustomList pre_token_balances =11;
+}
+
+message TokenBalanceList {
+  repeated TokenBalance token_balance_list = 1;
+}
+
+message TokenBalance{
+  uint32 account_index = 1;
+  string mint = 2;
+  UiTokenAmount ui_token_amount = 4;
+  string owner = 5;
+  string program_id = 6;
+}
+
+// message UiTokenAmountList {
+//   repeated UiTokenAmount Ui_token_amount_list = 1;
+// }
+
+message UiTokenAmount {
+  double ui_amount = 1;
+  uint32 decimals = 2;
+  string amount = 3;
+  string ui_amount_string = 4;
+}
+
+// ## Transaction List ##
+message TransactionList {
+  repeated Transaction transaction_details_list = 1;
+}
+

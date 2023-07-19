@@ -1,0 +1,36 @@
+specVersion: v0.1.0
+package:
+  name: solana_sample
+  version: v1.0.0
+
+protobuf:
+  files:
+    - block_meta.proto
+  importPaths:
+    - ./proto
+
+imports:
+  sol: https://github.com/streamingfast/firehose-solana/releases/download/v0.1.0/solana-v0.1.0.spkg
+  database_change: https://github.com/streamingfast/substreams-sink-database-changes/releases/download/v1.2.0/substreams-database-change-v1.2.0.spkg
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: target/wasm32-unknown-unknown/release/substreams.wasm
+
+modules:
+
+  - name: map_block
+    kind: map
+    inputs:
+      - source: sf.solana.type.v1.Block
+    output:
+      type: proto:acme.SolanaBlockHeader
+
+  - name: map_trx
+    kind: map
+    inputs:
+      - source: sf.solana.type.v1.Block
+    output:
+      type: proto:acme.TransactionList    
+
